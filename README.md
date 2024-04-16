@@ -2,7 +2,7 @@ This snaps one raster to another in QGIS
 
 CAUTION: This is currently just a first pass, it will only work where
 1. The coordinate systems of the two tifs are identical
-2. The pixel sizes of the tifs are identical
+2. The pixel sizes of the tifs are basically identical
 
 ________________________________________
 
