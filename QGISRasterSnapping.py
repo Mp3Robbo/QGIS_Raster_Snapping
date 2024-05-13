@@ -1,7 +1,6 @@
-import numpy
+import numpy, os, glob
 from qgis.core import QgsRasterLayer
-import os
-import glob
+from pathlib import Path
 
 #Note that this requires the coordinate system to be identical
 #The pixel size must also be nearly identical
@@ -12,16 +11,29 @@ User options
 """
 
 #That raster that is to be snapped
-inputRaster     = 'C:/Temp/InputRaster.tif'
+inputRaster  = 'D:/Temp/InputImage.tif'
 
 #The raster to snap to
-snapRaster      = 'C:/Temp/SnapRaster.tif'
-
-#The output raster to be created
-outputRaster    = 'C:/Temp/InputRasterSnapped.tif'
+snapRaster   = 'D:/Temp/SnapImage.tif'
 
 #Options for output compression
 compressOptions = 'COMPRESS=LZW|PREDICTOR=1|NUM_THREADS=ALL_CPUS|BIGTIFF=IF_SAFER|TILED=YES'
+
+"""
+##############################################################
+Initial variable work
+"""
+
+rootDirectory = str(Path(inputRaster).parent.absolute()).replace('\\','/') + '/'
+extension = inputRaster.split(".")
+extension = '.' + extension[-1]
+initialName = inputRaster.split("/")
+initialName = initialName[-1]
+initialName = initialName[:-1 * len(extension)]
+outputRaster = rootDirectory + initialName + 'Snapped' + extension
+
+if not os.path.exists(inputRaster): itDoesntExist
+if not os.path.exists(snapRaster): itDoesntExist
 
 """
 ##############################################################
@@ -103,7 +115,7 @@ print(str(listOfYCoords[:10]) + '...')
 
 """
 ##############################################################
-Determine what the delta X & Y needs to be, then transform
+Determine what the delta X & Y needs to be, then create the transformation parameter
 """
 
 #We'll aim to first snap the top left corner (highest y val, lowest x val)
